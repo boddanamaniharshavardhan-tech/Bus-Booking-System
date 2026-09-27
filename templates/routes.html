@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Routes Management</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+
+background:linear-gradient(-45deg,#0f172a,#2563eb,#00c6ff,#0f172a);
+background-size:400% 400%;
+animation:bg 15s infinite;
+color:white;
+
+}
+
+@keyframes bg{
+
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+
+}
+
+.sidebar{
+
+position:fixed;
+left:20px;
+top:20px;
+
+width:250px;
+height:95vh;
+
+background:rgba(255,255,255,.12);
+
+backdrop-filter:blur(15px);
+
+border-radius:20px;
+
+padding:25px;
+
+}
+
+.logo{
+
+font-size:25px;
+font-weight:bold;
+text-align:center;
+margin-bottom:35px;
+color:#00d9ff;
+
+}
+
+.sidebar a{
+
+display:block;
+
+padding:14px;
+
+margin:12px 0;
+
+border-radius:10px;
+
+text-decoration:none;
+
+color:white;
+
+transition:.3s;
+
+}
+
+.sidebar a:hover{
+
+background:#00d9ff;
+color:black;
+
+}
+
+.main{
+
+margin-left:290px;
+padding:30px;
+
+}
+
+.header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:25px;
+
+}
+
+.search{
+
+padding:14px;
+
+width:350px;
+
+border:none;
+
+border-radius:40px;
+
+outline:none;
+
+}
+
+.cards{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+gap:20px;
+
+margin-bottom:30px;
+
+}
+
+.card{
+
+background:rgba(255,255,255,.12);
+
+padding:25px;
+
+border-radius:20px;
+
+backdrop-filter:blur(15px);
+
+transition:.3s;
+
+}
+
+.card:hover{
+
+transform:translateY(-8px);
+
+}
+
+.card h2{
+
+font-size:30px;
+
+margin:10px 0;
+
+}
+
+.form-box{
+
+background:rgba(255,255,255,.12);
+
+padding:25px;
+
+border-radius:20px;
+
+backdrop-filter:blur(15px);
+
+}
+
+.form-box input{
+
+width:100%;
+
+padding:14px;
+
+margin:10px 0;
+
+border:none;
+
+border-radius:10px;
+
+outline:none;
+
+}
+
+.save{
+
+padding:14px 25px;
+
+border:none;
+
+background:#00d9ff;
+
+font-weight:bold;
+
+border-radius:30px;
+
+cursor:pointer;
+
+}
+/*================ TABLE =================*/
+
+.table-box{
+
+margin-top:35px;
+
+background:rgba(255,255,255,.12);
+
+backdrop-filter:blur(15px);
+
+padding:25px;
+
+border-radius:20px;
+
+box-shadow:0 15px 35px rgba(0,0,0,.3);
+
+}
+
+.table-box h2{
+
+margin-bottom:20px;
+
+}
+
+.table-container{
+
+overflow-x:auto;
+
+}
+
+table{
+
+width:100%;
+
+border-collapse:collapse;
+
+min-width:900px;
+
+}
+
+thead{
+
+background:#00d9ff;
+
+color:black;
+
+}
+
+th,td{
+
+padding:16px;
+
+text-align:center;
+
+}
+
+tbody tr{
+
+border-bottom:1px solid rgba(255,255,255,.12);
+
+transition:.3s;
+
+}
+
+tbody tr:hover{
+
+background:rgba(255,255,255,.08);
+
+}
+
+.active{
+
+background:#22c55e;
+
+padding:6px 15px;
+
+border-radius:20px;
+
+font-size:13px;
+
+font-weight:bold;
+
+}
+
+.view-btn,
+
+.edit-btn,
+
+.delete-btn{
+
+width:40px;
+
+height:40px;
+
+border:none;
+
+border-radius:50%;
+
+cursor:pointer;
+
+margin:0 3px;
+
+transition:.3s;
+
+}
+
+.view-btn{
+
+background:#2563eb;
+
+color:white;
+
+}
+
+.edit-btn{
+
+background:#f59e0b;
+
+}
+
+.delete-btn{
+
+background:#ef4444;
+
+color:white;
+
+}
+
+.view-btn:hover,
+
+.edit-btn:hover,
+
+.delete-btn:hover{
+
+transform:scale(1.15);
+
+}
+
+/*================ MODAL =================*/
+
+.modal{
+
+display:none;
+
+position:fixed;
+
+left:0;
+
+top:0;
+
+width:100%;
+
+height:100%;
+
+background:rgba(0,0,0,.6);
+
+justify-content:center;
+
+align-items:center;
+
+z-index:999;
+
+}
+
+.modal-content{
+
+width:420px;
+
+background:white;
+
+color:black;
+
+padding:30px;
+
+border-radius:15px;
+
+position:relative;
+
+animation:popup .3s;
+
+}
+
+.close{
+
+position:absolute;
+
+right:18px;
+
+top:8px;
+
+font-size:30px;
+
+cursor:pointer;
+
+}
+/*================ LOADER ================*/
+
+.loader{
+
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#0f172a;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+
+}
+
+.spinner{
+
+width:70px;
+height:70px;
+
+border:8px solid rgba(255,255,255,.2);
+border-top:8px solid #00d9ff;
+
+border-radius:50%;
+
+animation:spin 1s linear infinite;
+
+}
+
+@keyframes spin{
+
+100%{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+/*================ TOAST ================*/
+
+.toast{
+
+position:fixed;
+
+top:20px;
+right:20px;
+
+background:#22c55e;
+
+padding:15px 25px;
+
+border-radius:10px;
+
+display:none;
+
+font-weight:bold;
+
+box-shadow:0 10px 25px rgba(0,0,0,.3);
+
+z-index:999;
+
+}
+
+/*================ PAGINATION ================*/
+
+.pagination{
+
+display:flex;
+
+justify-content:center;
+
+gap:10px;
+
+margin-top:30px;
+
+}
+
+.pagination button{
+
+padding:10px 18px;
+
+border:none;
+
+border-radius:8px;
+
+background:#00d9ff;
+
+cursor:pointer;
+
+font-weight:bold;
+
+transition:.3s;
+
+}
+
+.pagination button:hover{
+
+transform:translateY(-4px);
+
+}
+
+/*================ FOOTER ================*/
+
+.footer{
+
+margin-top:40px;
+
+padding:20px;
+
+text-align:center;
+
+color:#ddd;
+
+font-size:14px;
+
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<div class="logo">
+
+🚌 Bus Admin
+
+</div>
+
+<a href="/dashboard">Dashboard</a>
+
+<a href="/bookings">Bookings</a>
+
+<a href="/routes">Routes</a>
+
+<a href="/reports">Reports</a>
+
+<a href="/settings">Settings</a>
+
+<a href="/logout">Logout</a>
+
+</div>
+
+<div class="main">
+
+<div class="header">
+
+<h1>Routes Management</h1>
+
+<input
+type="text"
+class="search"
+placeholder="Search Route...">
+
+</div>
+<button onclick="exportRoutes()"
+style="
+padding:12px 22px;
+border:none;
+border-radius:30px;
+background:#00d9ff;
+font-weight:bold;
+cursor:pointer;">
+
+<i class="fa-solid fa-file-csv"></i>
+
+Export CSV
+
+</button>
+
+<div class="cards">
+
+<div class="card">
+
+<i class="fa-solid fa-route"></i>
+
+<h2>{{routes|length}}</h2>
+
+<p>Total Routes</p>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-bus"></i>
+
+<h2>8</h2>
+
+<p>Active Buses</p>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-chair"></i>
+
+<h2>394</h2>
+
+<p>Total Seats</p>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-money-bill"></i>
+
+<h2>₹850</h2>
+
+<p>Average Fare</p>
+
+</div>
+
+</div>
+
+<div class="form-box">
+
+<h2>Add New Route</h2>
+
+<form action="/add_route" method="POST">
+
+<input
+type="text"
+name="route"
+placeholder="Route Name"
+required>
+
+<input
+type="number"
+name="price"
+placeholder="Ticket Price"
+required>
+
+<input
+type="text"
+name="time"
+placeholder="Departure Time"
+required>
+
+<input
+type="number"
+name="seats"
+placeholder="Total Seats"
+required>
+
+<button class="save">
+
+<i class="fa-solid fa-plus"></i>
+
+Add Route
+
+</button>
+
+</form>
+
+</div>
+
+<!-- PART 2 : ROUTES TABLE -->
+ <!-- ================= ROUTES TABLE ================= -->
+
+<div class="table-box">
+
+    <h2>
+    
+    <i class="fa-solid fa-route"></i>
+    
+    Available Routes
+    
+    </h2>
+    
+    <div class="table-container">
+    
+    <table id="routeTable">
+    
+    <thead>
+    
+    <tr>
+    
+    <th>ID</th>
+    
+    <th>Route</th>
+    
+    <th>Price</th>
+    
+    <th>Departure</th>
+    
+    <th>Seats</th>
+    
+    <th>Status</th>
+    
+    <th>Actions</th>
+    
+    </tr>
+    
+    </thead>
+    
+    <tbody>
+    
+    {% for route in routes %}
+    
+    <tr>
+    
+    <td>{{route.id}}</td>
+    
+    <td>{{route.route}}</td>
+    
+    <td>₹{{route.price}}</td>
+    
+    <td>{{route.time}}</td>
+    
+    <td>{{route.seats}}</td>
+    
+    <td>
+    
+    <span class="active">
+    
+    Active
+    
+    </span>
+    
+    </td>
+    
+    <td>
+    
+    <button class="view-btn"
+    
+    onclick="viewRoute(
+    
+    '{{route.route}}',
+    
+    '{{route.price}}',
+    
+    '{{route.time}}',
+    
+    '{{route.seats}}'
+    
+    )">
+    
+    <i class="fa-solid fa-eye"></i>
+    
+    </button>
+    
+    <a href="/edit_route/{{route.id}}">
+    
+    <button class="edit-btn">
+    
+    <i class="fa-solid fa-pen"></i>
+    
+    </button>
+    
+    </a>
+    
+    <a href="/delete_route/{{route.id}}"
+    
+    onclick="return confirm('Delete this Route?')">
+    
+    <button class="delete-btn">
+    
+    <i class="fa-solid fa-trash"></i>
+    
+    </button>
+    
+    </a>
+    
+    </td>
+    
+    </tr>
+    
+    {% endfor %}
+    
+    </tbody>
+    
+    </table>
+    
+    </div>
+    
+    </div>
+    
+    <!-- ================= ROUTE DETAILS MODAL ================= -->
+    
+    <div class="modal"
+    
+    id="routeModal">
+    
+    <div class="modal-content">
+    
+    <span
+    
+    class="close"
+    
+    onclick="closeModal()">
+    
+    &times;
+    
+    </span>
+    
+    <h2>
+    
+    Route Details
+    
+    </h2>
+    
+    <div id="routeDetails">
+    
+    </div>
+    
+    </div>
+    
+    </div>
+
+
+</div>
+<!-- LOADER -->
+
+<div class="loader" id="loader">
+
+    <div class="spinner"></div>
+    
+    </div>
+    
+    <!-- TOAST -->
+    
+    <div class="toast" id="toast">
+    
+    Route Loaded Successfully
+    
+    </div>
+    
+    <!-- PAGINATION -->
+    
+    <div class="pagination">
+    
+    <button>Previous</button>
+    
+    <button>1</button>
+    
+    <button>2</button>
+    
+    <button>3</button>
+    
+    <button>Next</button>
+    
+    </div>
+    
+    <!-- FOOTER -->
+    
+    <div class="footer">
+    
+    © 2026 Bus Booking Management System
+    
+    <br>
+    
+    Developed by Harsha
+    
+    </div>
+<script>
+
+    /*================ SEARCH =================*/
+    
+    document.querySelector(".search")
+    
+    .addEventListener("keyup",function(){
+    
+    let value=this.value.toLowerCase();
+    
+    let rows=document.querySelectorAll("#routeTable tbody tr");
+    
+    rows.forEach(function(row){
+    
+    row.style.display=
+    
+    row.innerText.toLowerCase()
+    
+    .includes(value)
+    
+    ?
+    
+    ""
+    
+    :
+    
+    "none";
+    
+    });
+    
+    });
+    
+    /*================ VIEW ROUTE =================*/
+    
+    function viewRoute(route,price,time,seats){
+    
+    document.getElementById("routeModal")
+    
+    .style.display="flex";
+    
+    document.getElementById("routeDetails")
+    
+    .innerHTML=
+    
+    `
+    
+    <p><b>Route :</b> ${route}</p>
+    
+    <p><b>Ticket Price :</b> ₹${price}</p>
+    
+    <p><b>Departure :</b> ${time}</p>
+    
+    <p><b>Total Seats :</b> ${seats}</p>
+    
+    `;
+    
+    }
+    
+    function closeModal(){
+    
+    document.getElementById("routeModal")
+    
+    .style.display="none";
+    
+    }
+    /*================ PAGE LOADER ================*/
+
+window.onload=function(){
+
+setTimeout(function(){
+
+document.getElementById("loader").style.display="none";
+
+showToast();
+
+},700);
+
+};
+
+/*================ TOAST ================*/
+
+function showToast(){
+
+let toast=document.getElementById("toast");
+
+toast.style.display="block";
+
+setTimeout(function(){
+
+toast.style.display="none";
+
+},3000);
+
+}
+
+/*================ EXPORT CSV ================*/
+
+function exportRoutes(){
+
+let csv=[];
+
+let rows=document.querySelectorAll("#routeTable tr");
+
+rows.forEach(function(row){
+
+let cols=row.querySelectorAll("th,td");
+
+let data=[];
+
+cols.forEach(function(col){
+
+data.push(col.innerText);
+
+});
+
+csv.push(data.join(","));
+
+});
+
+let blob=new Blob([csv.join("\n")],{
+
+type:"text/csv"
+
+});
+
+let link=document.createElement("a");
+
+link.download="Routes.csv";
+
+link.href=window.URL.createObjectURL(blob);
+
+link.click();
+
+}
+
+/*================ TABLE ANIMATION ================*/
+
+document.querySelectorAll("#routeTable tbody tr")
+
+.forEach(function(row,index){
+
+row.style.opacity="0";
+
+row.style.transform="translateY(20px)";
+
+setTimeout(function(){
+
+row.style.transition=".5s";
+
+row.style.opacity="1";
+
+row.style.transform="translateY(0)";
+
+},index*100);
+
+});
+    
+    </script>
+
+</body>
+
+</html>

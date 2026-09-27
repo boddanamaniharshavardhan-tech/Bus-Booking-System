@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Settings</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+
+background:linear-gradient(-45deg,#0f172a,#2563eb,#06b6d4,#0ea5e9,#0f172a);
+background-size:400% 400%;
+animation:bg 15s infinite;
+color:white;
+
+}
+
+@keyframes bg{
+
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+
+}
+
+.sidebar{
+
+position:fixed;
+
+left:20px;
+top:20px;
+
+width:250px;
+height:95vh;
+
+background:rgba(255,255,255,.12);
+
+backdrop-filter:blur(15px);
+
+border-radius:20px;
+
+padding:25px;
+
+}
+
+.logo{
+
+font-size:26px;
+
+font-weight:bold;
+
+text-align:center;
+
+margin-bottom:35px;
+
+color:#00d9ff;
+
+}
+
+.sidebar a{
+
+display:block;
+
+padding:14px;
+
+margin:10px 0;
+
+text-decoration:none;
+
+color:white;
+
+border-radius:10px;
+
+transition:.3s;
+
+}
+
+.sidebar a:hover{
+
+background:#00d9ff;
+
+color:black;
+
+transform:translateX(8px);
+
+}
+
+.main{
+
+margin-left:290px;
+
+padding:30px;
+
+}
+
+.header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:30px;
+
+}
+
+.grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(450px,1fr));
+
+gap:25px;
+
+}
+
+.box{
+
+background:rgba(255,255,255,.12);
+
+backdrop-filter:blur(15px);
+
+padding:25px;
+
+border-radius:20px;
+
+}
+
+.box h2{
+
+margin-bottom:20px;
+
+color:#00d9ff;
+
+}
+
+.box input{
+
+width:100%;
+
+padding:14px;
+
+margin:10px 0;
+
+border:none;
+
+border-radius:10px;
+
+outline:none;
+
+}
+
+.save{
+
+margin-top:15px;
+
+padding:14px 25px;
+
+border:none;
+
+background:#00d9ff;
+
+border-radius:30px;
+
+cursor:pointer;
+
+font-weight:bold;
+
+transition:.3s;
+
+}
+
+.save:hover{
+
+transform:translateY(-3px);
+
+}
+
+.toggle{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin:20px 0;
+
+font-size:18px;
+
+}
+
+.switch{
+
+width:60px;
+
+height:30px;
+
+background:#666;
+
+border-radius:20px;
+
+position:relative;
+
+cursor:pointer;
+
+}
+
+.switch::before{
+
+content:"";
+
+width:24px;
+
+height:24px;
+
+background:white;
+
+position:absolute;
+
+top:3px;
+
+left:3px;
+
+border-radius:50%;
+
+transition:.3s;
+
+}
+
+.switch.active{
+
+background:#22c55e;
+
+}
+
+.switch.active::before{
+
+left:33px;
+
+}
+
+.action{
+
+display:flex;
+
+gap:15px;
+
+margin-top:20px;
+
+flex-wrap:wrap;
+
+}
+
+.action button{
+
+padding:14px 22px;
+
+border:none;
+
+border-radius:30px;
+
+cursor:pointer;
+
+font-weight:bold;
+
+}
+
+.backup{
+
+background:#2563eb;
+color:white;
+
+}
+
+.restore{
+
+background:#22c55e;
+color:white;
+
+}
+
+.reset{
+
+background:#ef4444;
+color:white;
+
+}
+/*========== TOAST ==========*/
+
+.toast{
+
+position:fixed;
+top:20px;
+right:20px;
+
+background:#22c55e;
+color:white;
+
+padding:15px 25px;
+
+border-radius:10px;
+
+font-weight:bold;
+
+display:none;
+
+z-index:999;
+
+box-shadow:0 10px 25px rgba(0,0,0,.3);
+
+}
+
+/*========== LOADER ==========*/
+
+.loader{
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+background:#0f172a;
+
+display:flex;
+
+justify-content:center;
+align-items:center;
+
+z-index:9999;
+
+}
+
+.spinner{
+
+width:70px;
+height:70px;
+
+border:8px solid rgba(255,255,255,.2);
+
+border-top:8px solid #00d9ff;
+
+border-radius:50%;
+
+animation:spin 1s linear infinite;
+
+}
+
+@keyframes spin{
+
+100%{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+.footer{
+
+margin-top:40px;
+
+text-align:center;
+
+padding:20px;
+
+color:#ddd;
+
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<div class="logo">
+
+🚌 Bus Admin
+
+</div>
+
+<a href="/dashboard">Dashboard</a>
+
+<a href="/bookings">Bookings</a>
+
+<a href="/routes">Routes</a>
+
+<a href="/reports">Reports</a>
+
+<a href="/settings">Settings</a>
+
+<a href="/logout">Logout</a>
+
+</div>
+
+<div class="main">
+
+<div class="header">
+
+<h1>
+
+System Settings
+
+</h1>
+
+</div>
+
+<div class="grid">
+
+<div class="box">
+
+<h2>
+
+<i class="fa-solid fa-user-gear"></i>
+
+Admin Account
+
+</h2>
+
+<form action="/change_password" method="POST">
+
+<input
+type="text"
+name="username"
+placeholder="Admin Username">
+
+<input
+type="password"
+name="old_password"
+placeholder="Old Password">
+
+<input
+type="password"
+name="new_password"
+placeholder="New Password">
+
+<button class="save">
+
+Save Changes
+
+</button>
+
+</form>
+
+</div>
+
+<div class="box">
+
+<h2>
+
+<i class="fa-solid fa-sliders"></i>
+
+Preferences
+
+</h2>
+
+<div class="toggle">
+
+<span>Dark Mode</span>
+
+<div class="switch"
+
+onclick="toggle(this)">
+
+</div>
+
+</div>
+
+<div class="toggle">
+
+<span>Email Notification</span>
+
+<div class="switch"
+
+onclick="toggle(this)">
+
+</div>
+
+</div>
+
+<div class="toggle">
+
+<span>SMS Notification</span>
+
+<div class="switch"
+
+onclick="toggle(this)">
+
+</div>
+
+</div>
+
+<div class="toggle">
+
+<span>Auto Backup</span>
+
+<div class="switch"
+
+onclick="toggle(this)">
+
+</div>
+
+</div>
+
+</div>
+
+<div class="box">
+
+<h2>
+
+<i class="fa-solid fa-database"></i>
+
+Database
+
+</h2>
+
+<div class="action">
+
+<button class="backup">
+
+Backup Database
+
+</button>
+
+<button class="restore">
+
+Restore
+
+</button>
+
+<button class="reset">
+
+Reset System
+
+</button>
+
+</div>
+
+</div>
+
+<div class="box">
+
+<h2>
+
+<i class="fa-solid fa-circle-info"></i>
+
+System Information
+
+</h2>
+
+<p><b>Project :</b> Bus Booking System</p>
+
+<br>
+
+<p><b>Version :</b> 1.0.0</p>
+
+<br>
+
+<p><b>Backend :</b> Flask</p>
+
+<br>
+
+<p><b>Database :</b> SQLite3</p>
+
+<br>
+
+<p><b>Developer :</b> Harsha</p>
+
+<br>
+
+<p><b>Year :</b> 2026</p>
+
+</div>
+
+</div>
+
+</div>
+<div class="toast" id="toast">
+
+    Settings Saved Successfully
+    
+    </div>
+    
+    <div class="loader" id="loader">
+    
+    <div class="spinner"></div>
+    
+    </div>
+    
+    <div class="footer">
+    
+    © 2026 Bus Booking Management System
+    
+    <br>
+    
+    Developed by Harsha
+    
+    </div>
+    <a href="/backup">
+
+        <button class="backup">
+        
+        Backup Database
+        
+        </button>
+        
+        </a>
+<script>
+
+function toggle(element){
+
+element.classList.toggle("active");
+
+}
+
+window.onload=function(){
+
+setTimeout(function(){
+
+document.getElementById("loader").style.display="none";
+
+},800);
+
+}
+
+/*========== SAVE SETTINGS ==========*/
+
+document.querySelector("form")
+
+.addEventListener("submit",function(){
+
+let toast=document.getElementById("toast");
+
+toast.style.display="block";
+
+setTimeout(function(){
+
+toast.style.display="none";
+
+},3000);
+
+});
+
+/*========== DATABASE BACKUP ==========*/
+
+document.querySelector(".backup")
+
+.onclick=function(){
+
+alert("Database Backup Created Successfully.");
+
+}
+
+/*========== RESTORE ==========*/
+
+document.querySelector(".restore")
+
+.onclick=function(){
+
+alert("Database Restored Successfully.");
+
+}
+
+/*========== RESET ==========*/
+
+document.querySelector(".reset")
+
+.onclick=function(){
+
+let confirmReset=confirm(
+
+"Delete all Bookings?"
+
+);
+
+if(confirmReset){
+
+alert("System Reset Completed.");
+
+}
+
+}
+
+</script>
+
+</body>
+
+</html>

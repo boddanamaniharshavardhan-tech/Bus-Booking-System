@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dashboard | Bus Booking System</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+
+background:linear-gradient(
+-45deg,
+#0f172a,
+#1e3a8a,
+#0ea5e9,
+#6366f1,
+#0f172a);
+
+background-size:400% 400%;
+animation:bg 15s ease infinite;
+overflow-x:hidden;
+color:white;
+
+}
+
+@keyframes bg{
+
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+
+}
+
+.sidebar{
+
+position:fixed;
+
+left:20px;
+top:20px;
+
+width:250px;
+
+height:95vh;
+
+background:rgba(255,255,255,.12);
+
+backdrop-filter:blur(18px);
+
+border-radius:25px;
+
+padding:30px;
+
+box-shadow:0 15px 40px rgba(0,0,0,.3);
+
+}
+
+.logo{
+
+font-size:25px;
+
+font-weight:700;
+
+text-align:center;
+
+color:#00d9ff;
+
+margin-bottom:40px;
+
+}
+
+.menu{
+
+list-style:none;
+
+}
+
+.menu li{
+
+margin:20px 0;
+
+}
+
+.menu a{
+
+text-decoration:none;
+
+color:white;
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+padding:14px;
+
+border-radius:12px;
+
+transition:.3s;
+
+}
+
+.menu a:hover{
+
+background:#00d9ff;
+
+color:black;
+
+transform:translateX(8px);
+
+}
+
+.main{
+
+margin-left:290px;
+
+padding:30px;
+
+}
+
+.topbar{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:40px;
+
+}
+
+.topbar h1{
+
+font-size:35px;
+
+}
+
+.profile{
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+background:rgba(255,255,255,.12);
+
+padding:10px 20px;
+
+border-radius:50px;
+
+backdrop-filter:blur(10px);
+
+}
+
+.profile img{
+
+width:50px;
+
+height:50px;
+
+border-radius:50%;
+
+border:3px solid #00d9ff;
+
+}
+
+.cards{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+
+gap:25px;
+
+}
+
+.card{
+
+background:rgba(255,255,255,.12);
+
+padding:30px;
+
+border-radius:20px;
+
+backdrop-filter:blur(15px);
+
+transition:.4s;
+
+cursor:pointer;
+
+box-shadow:0 10px 25px rgba(0,0,0,.25);
+
+}
+
+.card:hover{
+
+transform:translateY(-12px);
+
+box-shadow:0 20px 40px rgba(0,217,255,.4);
+
+}
+
+.card i{
+
+font-size:40px;
+
+color:#00d9ff;
+
+margin-bottom:15px;
+
+}
+
+.card h1{
+
+font-size:35px;
+
+margin-bottom:10px;
+
+}
+
+.card p{
+
+color:#ddd;
+
+}
+
+@media(max-width:900px){
+
+.sidebar{
+
+position:relative;
+
+width:100%;
+
+height:auto;
+
+left:0;
+
+top:0;
+
+border-radius:0;
+
+}
+
+.main{
+
+margin-left:0;
+
+}
+
+.topbar{
+
+flex-direction:column;
+
+gap:20px;
+
+align-items:flex-start;
+
+}
+
+}
+/*================ TABLE =================*/
+
+.table-section{
+
+margin-top:45px;
+
+background:rgba(255,255,255,.12);
+
+backdrop-filter:blur(15px);
+
+padding:30px;
+
+border-radius:20px;
+
+box-shadow:0 10px 25px rgba(0,0,0,.25);
+
+}
+
+.table-header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:25px;
+
+flex-wrap:wrap;
+
+gap:20px;
+
+}
+
+.search-box{
+
+position:relative;
+
+}
+
+.search-box i{
+
+position:absolute;
+
+left:15px;
+
+top:14px;
+
+color:#666;
+
+}
+
+.search-box input{
+
+padding:12px 15px 12px 45px;
+
+width:300px;
+
+border:none;
+
+border-radius:30px;
+
+outline:none;
+
+font-size:15px;
+
+}
+
+.table-container{
+
+overflow-x:auto;
+
+}
+
+table{
+
+width:100%;
+
+border-collapse:collapse;
+
+min-width:900px;
+
+}
+
+thead{
+
+background:#00d9ff;
+
+color:#000;
+
+}
+
+th,td{
+
+padding:15px;
+
+text-align:center;
+
+}
+
+tbody tr{
+
+border-bottom:1px solid rgba(255,255,255,.15);
+
+transition:.3s;
+
+}
+
+tbody tr:hover{
+
+background:rgba(255,255,255,.08);
+
+}
+
+.status{
+
+padding:6px 14px;
+
+border-radius:20px;
+
+font-size:13px;
+
+font-weight:bold;
+
+}
+
+.confirmed{
+
+background:#28a745;
+
+}
+
+.pending{
+
+background:#ffc107;
+
+color:#000;
+
+}
+
+.cancelled{
+
+background:#dc3545;
+
+}
+
+.view-btn,
+.print-btn,
+.delete-btn{
+
+border:none;
+
+width:38px;
+
+height:38px;
+
+border-radius:50%;
+
+cursor:pointer;
+
+margin:0 3px;
+
+transition:.3s;
+
+}
+
+.view-btn{
+
+background:#17a2b8;
+
+color:white;
+
+}
+
+.print-btn{
+
+background:#ffc107;
+
+}
+
+.delete-btn{
+
+background:#dc3545;
+
+color:white;
+
+}
+
+.view-btn:hover,
+.print-btn:hover,
+.delete-btn:hover{
+
+transform:scale(1.15);
+
+}
+/* ================= Dashboard Bottom ================= */
+
+.dashboard-bottom{
+
+display:grid;
+
+grid-template-columns:2fr 1fr 1fr;
+
+gap:25px;
+
+margin-top:35px;
+
+}
+
+.glass-box{
+
+background:rgba(255,255,255,.12);
+
+backdrop-filter:blur(15px);
+
+padding:25px;
+
+border-radius:20px;
+
+box-shadow:0 10px 25px rgba(0,0,0,.3);
+
+transition:.3s;
+
+}
+
+.glass-box:hover{
+
+transform:translateY(-8px);
+
+}
+
+.glass-box h2{
+
+margin-bottom:20px;
+
+color:#00d9ff;
+
+}
+
+/* Chart */
+
+.chart{
+
+display:flex;
+
+align-items:flex-end;
+
+justify-content:space-around;
+
+height:260px;
+
+}
+
+.bar{
+
+width:45px;
+
+background:linear-gradient(#00d9ff,#0077ff);
+
+border-radius:12px 12px 0 0;
+
+position:relative;
+
+transition:.4s;
+
+cursor:pointer;
+
+}
+
+.bar:hover{
+
+transform:scaleY(1.1);
+
+}
+
+.bar span{
+
+position:absolute;
+
+bottom:-28px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+font-size:14px;
+
+}
+
+/* Schedule */
+
+.schedule-item{
+
+padding:12px;
+
+margin-bottom:12px;
+
+border-left:4px solid #00d9ff;
+
+background:rgba(255,255,255,.08);
+
+border-radius:8px;
+
+}
+
+/* Notifications */
+
+.notify{
+
+padding:14px;
+
+margin-bottom:15px;
+
+border-radius:10px;
+
+font-weight:500;
+
+}
+
+.success{
+
+background:#28a745;
+
+}
+
+.warning{
+
+background:#ffc107;
+
+color:black;
+
+}
+
+.info{
+
+background:#17a2b8;
+
+}
+
+.danger{
+
+background:#dc3545;
+
+}
+
+/* Responsive */
+
+@media(max-width:1100px){
+
+.dashboard-bottom{
+
+grid-template-columns:1fr;
+
+}
+
+}
+/*================ PROFILE MENU =================*/
+
+.profile-menu{
+
+position:absolute;
+
+top:90px;
+
+right:30px;
+
+width:220px;
+
+background:rgba(255,255,255,.12);
+
+backdrop-filter:blur(18px);
+
+border-radius:15px;
+
+display:none;
+
+overflow:hidden;
+
+box-shadow:0 10px 25px rgba(0,0,0,.3);
+
+z-index:999;
+
+}
+
+.profile-menu a{
+
+display:block;
+
+padding:15px;
+
+text-decoration:none;
+
+color:white;
+
+transition:.3s;
+
+}
+
+.profile-menu a:hover{
+
+background:#00d9ff;
+
+color:black;
+
+}
+
+/*================ CLOCK =================*/
+
+.live-clock{
+
+position:fixed;
+
+top:25px;
+
+right:220px;
+
+background:rgba(255,255,255,.15);
+
+backdrop-filter:blur(15px);
+
+padding:12px 18px;
+
+border-radius:15px;
+
+font-weight:bold;
+
+}
+
+/*================ EXPORT =================*/
+
+#exportBtn{
+
+position:fixed;
+
+bottom:30px;
+
+right:30px;
+
+border:none;
+
+padding:15px 22px;
+
+border-radius:50px;
+
+cursor:pointer;
+
+font-weight:bold;
+
+background:#00d9ff;
+
+transition:.3s;
+
+}
+
+#exportBtn:hover{
+
+transform:translateY(-5px);
+
+}
+
+/*================ THEME =================*/
+
+#themeBtn{
+
+position:fixed;
+
+bottom:95px;
+
+right:30px;
+
+width:55px;
+
+height:55px;
+
+border:none;
+
+border-radius:50%;
+
+font-size:20px;
+
+cursor:pointer;
+
+background:#111827;
+
+color:white;
+
+}
+
+/*================ TOAST =================*/
+
+#toast{
+
+position:fixed;
+
+top:25px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+background:#16a34a;
+
+padding:15px 25px;
+
+border-radius:30px;
+
+display:none;
+
+font-weight:bold;
+
+box-shadow:0 10px 25px rgba(0,0,0,.3);
+
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<div class="logo">
+
+🚌 Bus Admin
+
+</div>
+
+<ul class="menu">
+
+<li><a href="/dashboard"><i class="fa-solid fa-gauge-high"></i> Dashboard</a></li>
+
+<li><a href="/bookings"><i class="fa-solid fa-ticket"></i> Bookings</a></li>
+
+<li><a href="/routes"><i class="fa-solid fa-route"></i> Routes</a></li>
+
+<li><a href="/reports"><i class="fa-solid fa-chart-line"></i> Reports</a></li>
+
+<li><a href="/settings"><i class="fa-solid fa-gear"></i> Settings</a></li>
+
+<li><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+
+</ul>
+
+</div>
+
+<div class="main">
+
+<div class="topbar">
+
+<h1>Dashboard</h1>
+
+<div class="profile">
+
+<img src="https://i.pravatar.cc/100?img=12">
+
+<div>
+
+<b>Administrator</b>
+
+<br>
+
+<small>Bus Booking System</small>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="cards">
+
+<div class="card">
+
+<i class="fa-solid fa-ticket"></i>
+
+<h1 id="bookingCount">{{total}}</h1>
+
+<p>Total Bookings</p>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-calendar-day"></i>
+
+<h1 id="todayBooking">{{today}}</h1>
+
+<p>Today's Bookings</p>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-indian-rupee-sign"></i>
+
+<h1>₹{{revenue}}</h1>
+
+<p>Total Revenue</p>
+
+</div>
+
+<div class="card">
+
+<i class="fa-solid fa-chair"></i>
+
+<h1>40</h1>
+
+<p>Available Seats</p>
+
+</div>
+
+</div>
+
+<!-- PART 2 starts here -->
+ <!-- ===================== Recent Bookings ===================== -->
+
+<div class="table-section">
+
+    <div class="table-header">
+
+        <h2>Recent Bookings</h2>
+
+        <div class="search-box">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input type="text"
+                   id="searchInput"
+                   placeholder="Search Passenger, Route, Phone...">
+
+        </div>
+
+    </div>
+
+    <div class="table-container">
+
+        <table id="bookingTable">
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Passenger</th>
+                    <th>Phone</th>
+                    <th>Route</th>
+                    <th>Date</th>
+                    <th>Seats</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for row in bookings %}
+                
+                <tr>
+                
+                <td>{{row.id}}</td>
+                
+                <td>{{row.passenger_name}}</td>
+                
+                <td>{{row.phone}}</td>
+                
+                <td>{{row.route}}</td>
+                
+                <td>{{row.travel_date}}</td>
+                
+                <td>{{row.seats}}</td>
+                
+                <td>₹{{row.amount}}</td>
+                
+                <td>
+                <span class="status confirmed">
+                Confirmed
+                </span>
+                </td>
+                
+                <td>
+                
+                <button class="view-btn">
+                <i class="fa-solid fa-eye"></i>
+                </button>
+                
+                <button class="print-btn">
+                <i class="fa-solid fa-print"></i>
+                </button>
+                
+                <a href="/delete/{{row.id}}">
+                
+                <button class="delete-btn">
+                
+                <i class="fa-solid fa-trash"></i>
+                
+                </button>
+                
+                </a>
+                
+                </td>
+                
+                </tr>
+                
+                {% endfor %}
+                
+                </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</div>
+
+<!-- ================= Dashboard Bottom ================= -->
+
+<div class="dashboard-bottom">
+
+    <!-- Revenue Chart -->
+
+    <div class="glass-box">
+
+        <h2><i class="fa-solid fa-chart-column"></i> Weekly Revenue</h2>
+
+        <div class="chart">
+
+            <div class="bar" style="height:70%">
+                <span>Mon</span>
+            </div>
+
+            <div class="bar" style="height:90%">
+                <span>Tue</span>
+            </div>
+
+            <div class="bar" style="height:45%">
+                <span>Wed</span>
+            </div>
+
+            <div class="bar" style="height:100%">
+                <span>Thu</span>
+            </div>
+
+            <div class="bar" style="height:85%">
+                <span>Fri</span>
+            </div>
+
+            <div class="bar" style="height:60%">
+                <span>Sat</span>
+            </div>
+
+            <div class="bar" style="height:75%">
+                <span>Sun</span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Today's Schedule -->
+
+    <div class="glass-box">
+
+        <h2><i class="fa-solid fa-calendar-days"></i> Today's Schedule</h2>
+
+        <div class="schedule-item">
+            <strong>08:00 AM</strong>
+            <p>Hyderabad → Vizag</p>
+        </div>
+
+        <div class="schedule-item">
+            <strong>11:30 AM</strong>
+            <p>Vizag → Hyderabad</p>
+        </div>
+
+        <div class="schedule-item">
+            <strong>02:00 PM</strong>
+            <p>Tirupati → Chennai</p>
+        </div>
+
+        <div class="schedule-item">
+            <strong>06:30 PM</strong>
+            <p>Vijayawada → Bengaluru</p>
+        </div>
+
+    </div>
+
+    <!-- Notifications -->
+
+    <div class="glass-box">
+
+        <h2><i class="fa-solid fa-bell"></i> Notifications</h2>
+
+        <div class="notify success">
+
+            ✅ New Booking Received
+
+        </div>
+
+        <div class="notify warning">
+
+            ⚠ Seat Availability Low
+
+        </div>
+
+        <div class="notify info">
+
+            🚌 New Route Added
+
+        </div>
+
+        <div class="notify danger">
+
+            ❌ One Booking Cancelled
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    /*================ LIVE CLOCK =================*/
+
+function updateClock(){
+
+const now=new Date();
+
+document.getElementById("clock").innerHTML=
+
+now.toLocaleString();
+
+}
+
+setInterval(updateClock,1000);
+
+updateClock();
+
+
+/*================ PROFILE MENU =================*/
+
+document.querySelector(".profile").onclick=function(){
+
+const menu=document.getElementById("profileMenu");
+
+menu.style.display=
+
+menu.style.display==="block"
+
+?
+
+"none"
+
+:
+
+"block";
+
+};
+
+
+/*================ TOAST =================*/
+
+window.addEventListener("load",()=>{
+
+const toast=document.getElementById("toast");
+
+toast.style.display="block";
+
+setTimeout(()=>{
+
+toast.style.display="none";
+
+},3000);
+
+});
+
+
+/*================ EXPORT =================*/
+
+document.getElementById("exportBtn").onclick=function(){
+
+alert("CSV Export will be connected to Flask Backend.");
+
+};
+
+
+/*================ THEME =================*/
+
+let dark=true;
+
+document.getElementById("themeBtn").onclick=function(){
+
+if(dark){
+
+document.body.style.background="#f3f4f6";
+
+document.body.style.color="#111";
+
+document.querySelectorAll(".card,.glass-box,.table-section,.sidebar")
+
+.forEach(function(x){
+
+x.style.background="white";
+
+x.style.color="#111";
+
+});
+
+dark=false;
+
+}
+
+else{
+
+location.reload();
+
+}
+
+};
+
+function animateValue(id,start,end,duration){
+
+let obj=document.getElementById(id);
+
+let range=end-start;
+
+let current=start;
+
+let increment=end>start?1:-1;
+
+let step=Math.abs(Math.floor(duration/range));
+
+let timer=setInterval(function(){
+
+current+=increment;
+
+obj.innerHTML=current;
+
+if(current==end){
+
+clearInterval(timer);
+
+}
+
+},step);
+
+}
+
+animateValue("bookingCount",0,245,1200);
+
+animateValue("todayBooking",0,32,1000);
+/*================ SEARCH =================*/
+
+document.getElementById("searchInput")
+.addEventListener("keyup", function(){
+
+let value=this.value.toLowerCase();
+
+let rows=document.querySelectorAll("#bookingTable tbody tr");
+
+rows.forEach(function(row){
+
+let text=row.innerText.toLowerCase();
+
+row.style.display=text.includes(value)?"":"none";
+
+});
+
+});
+
+/*================ DELETE =================*/
+
+document.querySelectorAll(".delete-btn").forEach(function(btn){
+
+btn.onclick=function(){
+
+if(confirm("Delete this booking?")){
+
+this.closest("tr").remove();
+
+}
+
+};
+
+});
+
+/*================ PRINT =================*/
+
+document.querySelectorAll(".print-btn").forEach(function(btn){
+
+btn.onclick=function(){
+
+window.print();
+
+};
+
+});
+
+/*================ VIEW =================*/
+
+document.querySelectorAll(".view-btn").forEach(function(btn){
+
+btn.onclick=function(){
+
+alert("Booking Details page will be added in the next version.");
+
+};
+
+});
+/* ================= Notification Animation ================= */
+
+document.querySelectorAll(".notify").forEach((box,index)=>{
+
+box.style.opacity="0";
+
+box.style.transform="translateX(40px)";
+
+setTimeout(()=>{
+
+box.style.transition="0.6s";
+
+box.style.opacity="1";
+
+box.style.transform="translateX(0)";
+
+},index*250);
+
+});
+
+/* ================= Revenue Bar Animation ================= */
+
+document.querySelectorAll(".bar").forEach(bar=>{
+
+let h=bar.style.height;
+
+bar.style.height="0";
+
+setTimeout(()=>{
+
+bar.style.height=h;
+
+},300);
+
+});
+</script>
+<!-- ================= PROFILE DROPDOWN ================= -->
+
+<div class="profile-menu" id="profileMenu">
+
+    <a href="#">
+        <i class="fa-solid fa-user"></i> My Profile
+    </a>
+
+    <a href="#">
+        <i class="fa-solid fa-key"></i> Change Password
+    </a>
+
+    <a href="#">
+        <i class="fa-solid fa-gear"></i> Settings
+    </a>
+
+    <a href="/logout">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+    </a>
+
+</div>
+
+<!-- ================= TOAST ================= -->
+
+<div id="toast">
+
+<i class="fa-solid fa-circle-check"></i>
+
+Dashboard Loaded Successfully
+
+</div>
+
+<!-- ================= CLOCK ================= -->
+
+<div class="live-clock">
+
+<i class="fa-solid fa-clock"></i>
+
+<span id="clock"></span>
+
+</div>
+
+<!-- ================= EXPORT BUTTON ================= -->
+
+<button id="exportBtn">
+
+<i class="fa-solid fa-file-csv"></i>
+
+Export CSV
+
+</button>
+
+<!-- ================= DARK MODE ================= -->
+
+<button id="themeBtn">
+
+<i class="fa-solid fa-moon"></i>
+
+</button>
+</body>
+</html>

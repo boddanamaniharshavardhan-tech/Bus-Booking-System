@@ -1,0 +1,1913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Bus Booking System</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+
+font-family:'Poppins',sans-serif;
+margin:0;
+padding:0;
+min-height:100vh;
+color:white;
+overflow-x:hidden;
+
+background:linear-gradient(
+-45deg,
+#0f172a,
+#1e3a8a,
+#0ea5e9,
+#14b8a6,
+#6366f1,
+#7c3aed,
+#0f172a
+);
+
+background-size:400% 400%;
+
+animation:rgbBackground 15s ease infinite;
+
+}
+@keyframes rgbBackground{
+
+0%{
+
+background-position:0% 50%;
+
+}
+
+50%{
+
+background-position:100% 50%;
+
+}
+
+100%{
+
+background-position:0% 50%;
+
+}
+
+}
+/*================ NAVBAR ================*/
+
+nav{
+
+position:fixed;
+top:0;
+left:0;
+width:100%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 60px;
+background:rgba(0,0,0,.35);
+backdrop-filter:blur(12px);
+z-index:1000;
+
+}
+
+.logo{
+
+font-size:28px;
+font-weight:700;
+color:#00d9ff;
+
+}
+
+.logo i{
+
+margin-right:8px;
+
+}
+
+nav ul{
+
+display:flex;
+list-style:none;
+gap:35px;
+
+}
+
+nav ul li a{
+
+color:white;
+text-decoration:none;
+font-size:16px;
+transition:.3s;
+
+}
+
+nav ul li a:hover{
+
+color:#00d9ff;
+
+}
+
+.login-btn{
+
+background:#00d9ff;
+color:black;
+padding:10px 22px;
+border-radius:30px;
+font-weight:600;
+text-decoration:none;
+transition:.3s;
+
+}
+
+.login-btn:hover{
+
+transform:translateY(-3px);
+
+}
+
+/*================ HERO ================*/
+
+.hero{
+
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:120px 8%;
+
+}
+
+.left{
+
+width:50%;
+
+animation:leftAnimation 1s ease;
+
+}
+
+.left h1{
+
+font-size:60px;
+line-height:75px;
+margin-bottom:20px;
+
+}
+
+.left h1 span{
+
+color:#00d9ff;
+
+}
+
+.left p{
+
+font-size:18px;
+line-height:32px;
+color:#dddddd;
+margin-bottom:30px;
+
+}
+
+.book-now{
+
+background:#00d9ff;
+padding:15px 35px;
+border-radius:50px;
+color:black;
+text-decoration:none;
+font-weight:700;
+transition:.4s;
+
+}
+
+.book-now:hover{
+
+background:white;
+transform:translateY(-5px);
+
+}
+
+/*================ BOOKING CARD ================*/
+
+.booking{
+
+width:420px;
+
+background:rgba(255,255,255,.12);
+
+backdrop-filter:blur(15px);
+
+padding:35px;
+
+border-radius:25px;
+
+box-shadow:0 15px 40px rgba(0,0,0,.4);
+
+animation:rightAnimation 1s ease;
+
+}
+
+.booking h2{
+
+text-align:center;
+margin-bottom:25px;
+
+}
+
+.input-box{
+
+margin-bottom:18px;
+
+}
+
+.input-box label{
+
+display:block;
+margin-bottom:8px;
+
+}
+
+.input-box input,
+.input-box select{
+
+width:100%;
+
+padding:14px;
+
+border:none;
+
+outline:none;
+
+border-radius:12px;
+
+background:white;
+
+font-size:15px;
+
+}
+
+.book-btn{
+
+width:100%;
+
+padding:16px;
+
+background:#00d9ff;
+
+border:none;
+
+font-size:18px;
+
+font-weight:700;
+
+border-radius:50px;
+
+cursor:pointer;
+
+transition:.4s;
+
+}
+
+.book-btn:hover{
+
+background:white;
+
+transform:scale(1.03);
+
+}
+
+#result{
+
+margin-top:20px;
+text-align:center;
+font-weight:600;
+color:#00ff7f;
+
+}
+
+@keyframes leftAnimation{
+
+from{
+
+opacity:0;
+transform:translateX(-80px);
+
+}
+
+to{
+
+opacity:1;
+transform:translateX(0);
+
+}
+
+}
+
+@keyframes rightAnimation{
+
+from{
+
+opacity:0;
+transform:translateX(80px);
+
+}
+
+to{
+
+opacity:1;
+transform:translateX(0);
+
+}
+
+}
+/*==================== SECTION TITLE ====================*/
+
+.section-title{
+
+text-align:center;
+
+font-size:40px;
+
+margin-bottom:50px;
+
+color:#00d9ff;
+
+}
+
+
+
+/*==================== ROUTES ====================*/
+
+.routes{
+
+padding:100px 8%;
+
+}
+
+.route-container{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+
+gap:30px;
+
+}
+
+.route-card{
+
+background:rgba(255,255,255,.10);
+
+backdrop-filter:blur(12px);
+
+padding:35px;
+
+border-radius:20px;
+
+text-align:center;
+
+transition:.4s;
+
+}
+
+.route-card:hover{
+
+transform:translateY(-12px);
+
+box-shadow:0 15px 35px rgba(0,217,255,.4);
+
+}
+
+.route-card i{
+
+font-size:45px;
+
+color:#00d9ff;
+
+margin-bottom:20px;
+
+}
+
+
+
+/*==================== FEATURES ====================*/
+
+.features{
+
+padding:80px 8%;
+
+}
+
+.feature-container{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+
+gap:30px;
+
+}
+
+.feature-card{
+
+background:rgba(255,255,255,.10);
+
+padding:35px;
+
+border-radius:20px;
+
+text-align:center;
+
+transition:.4s;
+
+}
+
+.feature-card:hover{
+
+transform:scale(1.05);
+
+}
+
+.feature-card i{
+
+font-size:45px;
+
+color:#00d9ff;
+
+margin-bottom:20px;
+
+}
+
+
+
+/*==================== COUNTER ====================*/
+
+.counter{
+
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+padding:70px;
+
+background:rgba(0,0,0,.35);
+
+margin-top:80px;
+
+text-align:center;
+
+}
+
+.counter h1{
+
+font-size:45px;
+
+color:#00d9ff;
+
+}
+
+
+
+/*==================== TESTIMONIAL ====================*/
+
+.testimonial{
+
+padding:100px 8%;
+
+}
+
+.review-container{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+
+gap:30px;
+
+}
+
+.review{
+
+background:rgba(255,255,255,.10);
+
+padding:30px;
+
+border-radius:20px;
+
+text-align:center;
+
+transition:.4s;
+
+}
+
+.review:hover{
+
+transform:translateY(-10px);
+
+}
+
+.review img{
+
+width:90px;
+
+height:90px;
+
+border-radius:50%;
+
+margin-bottom:15px;
+
+border:4px solid #00d9ff;
+
+}
+
+
+
+/*==================== FOOTER ====================*/
+
+footer{
+
+padding:50px;
+
+text-align:center;
+
+background:black;
+
+}
+
+footer h2{
+
+color:#00d9ff;
+
+margin-bottom:20px;
+
+}
+
+.social{
+
+margin:20px 0;
+
+}
+
+.social i{
+
+font-size:26px;
+
+margin:15px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.social i:hover{
+
+color:#00d9ff;
+
+transform:scale(1.3);
+
+}
+/* Loader */
+
+#loader{
+
+position:fixed;
+
+width:100%;
+
+height:100%;
+
+background:#07131f;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+z-index:99999;
+
+}
+
+.spinner{
+
+width:70px;
+
+height:70px;
+
+border:8px solid white;
+
+border-top:8px solid #00d9ff;
+
+border-radius:50%;
+
+animation:spin 1s linear infinite;
+
+}
+
+@keyframes spin{
+
+100%{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+
+/* Ticket Popup */
+
+.ticket-popup{
+
+display:none;
+
+justify-content:center;
+
+align-items:center;
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+height:100%;
+
+background:rgba(0,0,0,.7);
+
+z-index:9999;
+
+}
+
+.ticket{
+
+background:white;
+
+color:black;
+
+padding:35px;
+
+width:420px;
+
+border-radius:20px;
+
+animation:popup .5s;
+
+}
+
+.ticket button{
+
+margin-top:20px;
+
+width:100%;
+
+padding:14px;
+
+background:#00d9ff;
+
+border:none;
+
+border-radius:30px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+}
+
+@keyframes popup{
+
+from{
+
+transform:scale(.5);
+
+opacity:0;
+
+}
+
+to{
+
+transform:scale(1);
+
+opacity:1;
+
+}
+
+}
+
+
+/* Scroll Button */
+
+#topBtn{
+
+position:fixed;
+
+right:30px;
+
+bottom:30px;
+
+width:55px;
+
+height:55px;
+
+border:none;
+
+border-radius:50%;
+
+background:#00d9ff;
+
+display:none;
+
+cursor:pointer;
+
+font-size:20px;
+
+}
+
+
+/* Clock */
+
+.clock{
+
+position:fixed;
+
+top:90px;
+
+right:20px;
+
+background:rgba(255,255,255,.2);
+
+backdrop-filter:blur(15px);
+
+padding:10px 18px;
+
+border-radius:15px;
+
+font-weight:bold;
+
+}
+
+
+/* Theme Button */
+
+#themeBtn{
+
+position:fixed;
+
+top:160px;
+
+right:20px;
+
+width:55px;
+
+height:55px;
+
+border:none;
+
+border-radius:50%;
+
+background:#00d9ff;
+
+font-size:20px;
+
+cursor:pointer;
+
+box-shadow:0 5px 20px rgba(0,0,0,.4);
+
+}
+
+
+/* Search */
+
+.search-section{
+
+padding:90px;
+
+text-align:center;
+
+}
+
+.search-section input{
+
+width:420px;
+
+max-width:90%;
+
+padding:16px;
+
+border:none;
+
+border-radius:40px;
+
+font-size:18px;
+
+outline:none;
+
+}
+
+
+/* News */
+
+.news{
+
+padding:80px;
+
+}
+
+.news-box{
+
+background:rgba(255,255,255,.12);
+
+padding:35px;
+
+border-radius:20px;
+
+backdrop-filter:blur(12px);
+
+line-height:40px;
+
+}
+
+
+/* Mobile */
+
+@media(max-width:900px){
+
+.hero{
+
+flex-direction:column;
+
+text-align:center;
+
+height:auto;
+
+padding-top:140px;
+
+}
+
+.left{
+
+width:100%;
+
+margin-bottom:40px;
+
+}
+
+.left h1{
+
+font-size:40px;
+
+line-height:55px;
+
+}
+
+.booking{
+
+width:100%;
+
+}
+
+nav{
+
+padding:15px;
+
+flex-direction:column;
+
+}
+
+nav ul{
+
+margin-top:20px;
+
+flex-wrap:wrap;
+
+justify-content:center;
+
+}
+
+.counter{
+
+grid-template-columns:repeat(2,1fr);
+
+gap:20px;
+
+}
+
+}
+.bg-circle{
+
+position:fixed;
+
+border-radius:50%;
+
+filter:blur(120px);
+
+opacity:.35;
+
+animation:float 12s infinite alternate;
+
+z-index:-1;
+
+}
+
+.c1{
+
+width:300px;
+height:300px;
+background:#00d9ff;
+top:5%;
+left:5%;
+
+}
+
+.c2{
+
+width:250px;
+height:250px;
+background:#7c3aed;
+top:55%;
+right:8%;
+
+}
+
+.c3{
+
+width:220px;
+height:220px;
+background:#00ff99;
+bottom:8%;
+left:25%;
+
+}
+
+.c4{
+
+width:280px;
+height:280px;
+background:#ff3cac;
+top:20%;
+right:30%;
+
+}
+
+@keyframes float{
+
+0%{
+
+transform:translateY(0) scale(1);
+
+}
+
+100%{
+
+transform:translateY(-50px) scale(1.2);
+
+}
+
+}
+
+
+/* ================= ENHANCED UI / BUG FIXES ================= */
+
+body{
+    transition:background .35s ease,color .35s ease;
+}
+
+nav ul li a{
+    position:relative;
+}
+nav ul li a::after{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:-6px;
+    width:0;
+    height:2px;
+    background:#00d9ff;
+    transition:.3s;
+}
+nav ul li a:hover::after{
+    width:100%;
+}
+
+.route-book{
+    margin-top:18px;
+    padding:9px 16px;
+    border:0;
+    border-radius:20px;
+    background:#00d9ff;
+    color:#07131f;
+    font-weight:700;
+    cursor:pointer;
+    transition:.3s;
+}
+.route-book:hover{
+    transform:translateY(-2px);
+    background:white;
+}
+
+.input-box input:focus,
+.input-box select:focus,
+.search-section input:focus{
+    box-shadow:0 0 0 3px rgba(0,217,255,.25);
+}
+
+.input-box input:invalid{
+    box-shadow:none;
+}
+
+.contact-section{
+    padding:100px 8%;
+}
+.contact-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:30px;
+}
+.contact-card{
+    background:rgba(255,255,255,.10);
+    backdrop-filter:blur(12px);
+    padding:35px 25px;
+    border-radius:20px;
+    text-align:center;
+    transition:.35s;
+}
+.contact-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 12px 30px rgba(0,217,255,.25);
+}
+.contact-card i{
+    font-size:40px;
+    color:#00d9ff;
+    margin-bottom:15px;
+}
+.contact-card h3{
+    margin-bottom:8px;
+}
+.contact-card p{
+    font-weight:600;
+    margin-bottom:8px;
+}
+.contact-card small{
+    color:#ddd;
+}
+
+.light-mode{
+    color:#172033;
+    background:#eef4f8 !important;
+    animation:none !important;
+}
+.light-mode nav{
+    background:rgba(255,255,255,.88);
+}
+.light-mode nav ul li a{
+    color:#172033;
+}
+.light-mode .logo{
+    color:#007fa8;
+}
+.light-mode .route-card,
+.light-mode .feature-card,
+.light-mode .review,
+.light-mode .booking,
+.light-mode .contact-card,
+.light-mode .news-box{
+    background:rgba(255,255,255,.85);
+    color:#172033;
+}
+.light-mode .left p,
+.light-mode .contact-card small{
+    color:#4b5563;
+}
+.light-mode .section-title{
+    color:#007fa8;
+}
+.light-mode .counter{
+    background:rgba(255,255,255,.75);
+}
+.light-mode footer{
+    background:#101827;
+    color:white;
+}
+.light-mode .bg-circle{
+    opacity:.12;
+}
+
+@media(max-width:900px){
+    nav{
+        position:sticky;
+        top:0;
+        padding:12px 10px;
+    }
+    nav ul{
+        gap:14px;
+    }
+    nav ul li a{
+        font-size:13px;
+    }
+    .login-btn{
+        padding:8px 14px;
+        font-size:13px;
+    }
+    .clock{
+        top:auto;
+        bottom:95px;
+        right:15px;
+        font-size:12px;
+    }
+    #themeBtn{
+        top:auto;
+        bottom:30px;
+        right:15px;
+        width:48px;
+        height:48px;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+    <div class="bg-circle c1"></div>
+    <div class="bg-circle c2"></div>
+    <div class="bg-circle c3"></div>
+    <div class="bg-circle c4"></div>
+<nav>
+
+<div class="logo">
+
+<i class="fa-solid fa-bus"></i>
+
+Bus Booking
+
+</div>
+
+<ul>
+
+<li><a href="#">Home</a></li>
+
+<li><a href="#">Routes</a></li>
+
+<li><a href="#">Services</a></li>
+
+<li><a href="#">About</a></li>
+
+<li><a href="#">Contact</a></li>
+
+</ul>
+
+<a href="/login" class="login-btn">
+
+Admin Login
+
+</a>
+
+</nav>
+
+<section class="hero" id="home">
+
+<div class="left">
+
+<h1>
+
+Travel Smart <br>
+
+with <span>Bus Booking</span>
+
+</h1>
+
+<p>
+
+Book your journey in just a few clicks.
+
+Fast, Secure and Comfortable Bus Ticket Booking.
+
+</p>
+
+<a href="#booking" class="book-now">
+
+Book Ticket
+
+</a>
+
+</div>
+
+<div class="booking" id="booking">
+
+<h2>
+
+<i class="fa-solid fa-ticket"></i>
+
+Book Ticket
+
+</h2>
+
+<div class="input-box">
+
+<label>Passenger Name</label>
+
+<input type="text" id="name" autocomplete="name" required>
+
+</div>
+
+<div class="input-box">
+
+<label>Phone Number</label>
+
+<input type="tel" id="phone" inputmode="numeric" maxlength="10" placeholder="10-digit mobile number" required>
+
+</div>
+
+<div class="input-box">
+
+<label>Select Route</label>
+
+<select id="route">
+
+<option>Hyderabad → Vizag</option>
+
+<option>Vizag → Hyderabad</option>
+
+<option>Pathapatnam → Srikakulam</option>
+
+<option>Pathapatnam → Palakonda</option>
+
+<option>Pathapatnam → Hyderabad</option>
+
+<option>Tirupati → Chennai</option>
+
+<option>Vijayawada → Bengaluru</option>
+
+</select>
+
+</div>
+
+<div class="input-box">
+
+<label>Travel Date</label>
+
+<input type="date" id="date" required>
+
+</div>
+
+<div class="input-box">
+
+<label>Seats</label>
+
+<input type="number" id="seats" min="1" max="6" required>
+
+</div>
+
+<button class="book-btn" onclick="bookTicket()">
+
+Book Ticket
+
+</button>
+
+<p id="result"></p>
+
+</div>
+
+</section>
+<!-- ================= POPULAR ROUTES ================= -->
+
+<section class="routes" id="routes">
+
+    <h2 class="section-title">Popular Routes</h2>
+    
+    <div class="route-container">
+    
+    <div class="route-card">
+    <i class="fa-solid fa-bus-simple"></i>
+    <h3>Hyderabad → Vizag</h3>
+    <p>Starting from <strong>₹850</strong></p>
+    <button class="route-book" onclick="selectRoute('Hyderabad → Vizag')">Book this route</button>
+    </div>
+    
+    <div class="route-card">
+    <i class="fa-solid fa-bus-simple"></i>
+    <h3>Vizag → Hyderabad</h3>
+    <p>Starting from <strong>₹850</strong></p>
+    <button class="route-book" onclick="selectRoute('Vizag → Hyderabad')">Book this route</button>
+    </div>
+
+    <div class="route-card">
+    <i class="fa-solid fa-bus-simple"></i>
+    <h3>Pathapatnam → Srikakulam</h3>
+    <p>Starting from <strong>₹250</strong></p>
+    <button class="route-book" onclick="selectRoute('Pathapatnam → Srikakulam')">Book this route</button>
+    </div>
+
+    <div class="route-card">
+    <i class="fa-solid fa-bus-simple"></i>
+    <h3>Pathapatnam → Palakonda</h3>
+    <p>Starting from <strong>₹220</strong></p>
+    <button class="route-book" onclick="selectRoute('Pathapatnam → Palakonda')">Book this route</button>
+    </div>
+
+    <div class="route-card">
+    <i class="fa-solid fa-bus-simple"></i>
+    <h3>Pathapatnam → Hyderabad</h3>
+    <p>Starting from <strong>₹500</strong></p>
+    <button class="route-book" onclick="selectRoute('Pathapatnam → Hyderabad')">Book this route</button>
+    </div>
+    
+    <div class="route-card">
+    <i class="fa-solid fa-bus-simple"></i>
+    <h3>Tirupati → Chennai</h3>
+    <p>Starting from <strong>₹450</strong></p>
+    <button class="route-book" onclick="selectRoute('Tirupati → Chennai')">Book this route</button>
+    </div>
+    
+    
+    
+    </div>
+    
+    </section>
+    
+    
+    <!-- ================= WHY CHOOSE US ================= -->
+    
+    <section class="features" id="services">
+    
+    <h2 class="section-title">
+    
+    Why Choose Us
+    
+    </h2>
+    
+    <div class="feature-container">
+    
+    <div class="feature-card">
+    
+    <i class="fa-solid fa-shield-halved"></i>
+    
+    <h3>Safe Journey</h3>
+    
+    <p>
+    
+    Your safety is our highest priority.
+    
+    </p>
+    
+    </div>
+    
+    <div class="feature-card">
+    
+    <i class="fa-solid fa-wallet"></i>
+    
+    <h3>Affordable Price</h3>
+    
+    <p>
+    
+    Best prices without hidden charges.
+    
+    </p>
+    
+    </div>
+    
+    <div class="feature-card">
+    
+    <i class="fa-solid fa-headset"></i>
+    
+    <h3>24 × 7 Support</h3>
+    
+    <p>
+    
+    Customer support anytime.
+    
+    </p>
+    
+    </div>
+    
+    <div class="feature-card">
+    
+    <i class="fa-solid fa-clock"></i>
+    
+    <h3>On Time</h3>
+    
+    <p>
+    
+    Always punctual and reliable.
+    
+    </p>
+    
+    </div>
+    
+    </div>
+    
+    </section>
+    
+    
+    
+    <!-- ================= COUNTERS ================= -->
+    
+    <section class="counter">
+    
+    <div>
+    
+    <h1>150+</h1>
+    
+    <p>Buses</p>
+    
+    </div>
+    
+    <div>
+    
+    <h1>50K+</h1>
+    
+    <p>Happy Customers</p>
+    
+    </div>
+    
+    <div>
+    
+    <h1>500+</h1>
+    
+    <p>Daily Trips</p>
+    
+    </div>
+    
+    <div>
+    
+    <h1>99%</h1>
+    
+    <p>Customer Satisfaction</p>
+    
+    </div>
+    
+    </section>
+    
+    
+    
+    <!-- ================= TESTIMONIAL ================= -->
+    
+    <section class="testimonial">
+    
+    <h2 class="section-title">
+    
+    Customer Reviews
+    
+    </h2>
+    
+    <div class="review-container">
+    
+    <div class="review">
+    
+    <img src="https://i.pravatar.cc/100?img=1">
+    
+    <h3>Rahul</h3>
+    
+    ⭐⭐⭐⭐⭐
+    
+    <p>
+    
+    Very easy booking process and comfortable buses.
+    
+    </p>
+    
+    </div>
+    
+    <div class="review">
+    
+    <img src="https://i.pravatar.cc/100?img=5">
+    
+    <h3>Priya</h3>
+    
+    ⭐⭐⭐⭐⭐
+    
+    <p>
+    
+    Professional service and clean buses.
+    
+    </p>
+    
+    </div>
+    
+    <div class="review">
+    
+    <img src="https://i.pravatar.cc/100?img=15">
+    
+    <h3>Arjun</h3>
+    
+    ⭐⭐⭐⭐⭐
+    
+    <p>
+    
+    Highly recommend this booking platform.
+    
+    </p>
+    
+    </div>
+    
+    </div>
+    
+    </section>
+    
+    
+    
+    
+<!-- ================= CONTACT ================= -->
+<section class="contact-section" id="contact">
+    <h2 class="section-title">Contact Us</h2>
+    <div class="contact-container">
+        <div class="contact-card">
+            <i class="fa-solid fa-phone"></i>
+            <h3>Phone Support</h3>
+            <p>[Your Phone Number]</p>
+            <small>Replace this demo placeholder with your support number.</small>
+        </div>
+        <div class="contact-card">
+            <i class="fa-solid fa-envelope"></i>
+            <h3>Email Support</h3>
+            <p>[Your Email Address]</p>
+            <small>Replace this demo placeholder with your support email.</small>
+        </div>
+        <div class="contact-card">
+            <i class="fa-solid fa-location-dot"></i>
+            <h3>Service Area</h3>
+            <p>Andhra Pradesh & Telangana</p>
+            <small>Serving the routes configured in this project.</small>
+        </div>
+    </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+    
+    <footer>
+    
+    <h2>
+    
+    <i class="fa-solid fa-bus"></i>
+    
+    Bus Booking System
+    
+    </h2>
+    
+    <p>
+    
+    Fast • Safe • Comfortable Journey
+    
+    </p>
+    
+    <div class="social">
+    
+    <i class="fab fa-facebook"></i>
+    
+    <i class="fab fa-instagram"></i>
+    
+    <i class="fab fa-twitter"></i>
+    
+    <i class="fab fa-linkedin"></i>
+    
+    </div>
+    
+    <p>
+    
+    © 2026 Bus Booking System | All Rights Reserved
+    
+    </p>
+    
+    </footer>
+    <!-- ================= Loading Screen ================= -->
+
+<div id="loader">
+
+    <div class="spinner"></div>
+    
+    <h2>Loading Bus Booking...</h2>
+    
+    </div>
+    
+    <!-- ================= Ticket Popup ================= -->
+    
+    <div class="ticket-popup" id="ticketPopup">
+    
+    <div class="ticket">
+    
+    <h2>🎉 Booking Successful</h2>
+    
+    <hr>
+    
+    <p><strong>Passenger :</strong> <span id="tName"></span></p>
+    
+    <p><strong>Phone :</strong> <span id="tPhone"></span></p>
+    
+    <p><strong>Route :</strong> <span id="tRoute"></span></p>
+    
+    <p><strong>Travel Date :</strong> <span id="tDate"></span></p>
+    
+    <p><strong>Seats :</strong> <span id="tSeats"></span></p>
+    
+    <p><strong>Total Price :</strong> ₹<span id="tPrice"></span></p>
+    
+    <p><strong>Booking ID :</strong>
+    BK<span id="bookingId"></span></p>
+    
+    <button onclick="closeTicket()">
+    
+    Close
+    
+    </button>
+    
+    </div>
+    
+    </div>
+    
+    <!-- Scroll Top -->
+    
+    <button id="topBtn">
+    
+    <i class="fa-solid fa-arrow-up"></i>
+    
+    </button>
+    
+    <!-- Live Clock -->
+    
+    <div class="clock">
+    
+    <i class="fa-solid fa-clock"></i>
+    
+    <span id="clock"></span>
+    
+    </div>
+    
+    <!-- ================= DARK MODE BUTTON ================= -->
+    
+    <button id="themeBtn">
+    
+    <i class="fa-solid fa-moon"></i>
+    
+    </button>
+    
+    <!-- ================= SEARCH ROUTE ================= -->
+    
+    <section class="search-section">
+    
+    <h2 class="section-title">
+    
+    Find Your Route
+    
+    </h2>
+    
+    <input
+    type="text"
+    id="searchRoute"
+    placeholder="Search Route...">
+    
+    </section>
+    
+    <!-- ================= NEWS ================= -->
+    
+    <section class="news">
+    
+    <h2 class="section-title">
+    
+    Latest Updates
+    
+    </h2>
+    
+    <div class="news-box">
+    
+    <p>🚌 Hyderabad → Vizag Special Bus Available.</p>
+    
+    <p>🎉 Flat 20% Discount on Weekend Booking.</p>
+    
+    <p>⭐ Book Online & Skip the Queue.</p>
+    
+    </div>
+    
+    </section>
+    <script>
+    
+    // Set minimum travel date to today
+const dateInput = document.getElementById("date");
+dateInput.min = new Date().toISOString().split("T")[0];
+
+// ================= Loader =================
+    
+    window.onload=function(){
+    
+    setTimeout(function(){
+    
+    document.getElementById("loader").style.display="none";
+    
+    },1500);
+    
+    };
+    
+    // ================= Clock =================
+    
+    function updateClock(){
+    
+    let now=new Date();
+    
+    document.getElementById("clock").innerHTML=
+    
+    now.toLocaleString();
+    
+    }
+    
+    setInterval(updateClock,1000);
+    
+    updateClock();
+    
+    
+    // ================= Scroll Button =================
+    
+    let btn=document.getElementById("topBtn");
+    
+    window.onscroll=function(){
+    
+    if(document.documentElement.scrollTop>250){
+    
+    btn.style.display="block";
+    
+    }else{
+    
+    btn.style.display="none";
+    
+    }
+    
+    };
+    
+    btn.onclick=function(){
+    
+    window.scrollTo({
+    
+    top:0,
+    
+    behavior:"smooth"
+    
+    });
+    
+    };
+    
+    
+    // ================= Booking =================
+
+const routePrices = {
+    "Hyderabad → Vizag": 850,
+    "Vizag → Hyderabad": 850,
+    "Pathapatnam → Srikakulam": 250,
+    "Pathapatnam → Palakonda": 220,
+    "Hyderabad → Visakhapatnam": 850,
+    "Tirupati → Chennai": 450
+};
+
+function selectRoute(routeName){
+    const routeSelect = document.getElementById("route");
+    routeSelect.value = routeName;
+    document.getElementById("booking").scrollIntoView({behavior:"smooth", block:"center"});
+}
+
+function bookTicket(){
+    const name = document.getElementById("name").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const route = document.getElementById("route").value;
+    const date = document.getElementById("date").value;
+    const seats = Number(document.getElementById("seats").value);
+
+    if(!name || !phone || !date || !seats){
+        alert("Please fill all fields.");
+        return;
+    }
+
+    if(!/^[A-Za-z ]{2,50}$/.test(name)){
+        alert("Please enter a valid passenger name.");
+        return;
+    }
+
+    if(!/^[6-9]\d{9}$/.test(phone)){
+        alert("Please enter a valid 10-digit Indian mobile number.");
+        return;
+    }
+
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    const selectedDate = new Date(date + "T00:00:00");
+
+    if(selectedDate < today){
+        alert("Travel date cannot be in the past.");
+        return;
+    }
+
+    if(seats < 1 || seats > 6){
+        alert("You can book between 1 and 6 seats.");
+        return;
+    }
+
+    const pricePerSeat = routePrices[route] || 500;
+    const totalPrice = pricePerSeat * seats;
+
+    // Send the booking to the Flask backend first.
+    fetch("/book",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({
+            name:name,
+            phone:phone,
+            route:route,
+            date:date,
+            seats:seats
+        })
+    })
+    .then(async response => {
+        let data = null;
+        const contentType = response.headers.get("content-type") || "";
+
+        if(contentType.includes("application/json")){
+            data = await response.json();
+        }else{
+            await response.text();
+        }
+
+        if(!response.ok){
+            throw new Error(data && data.message ? data.message : "Booking failed");
+        }
+
+        return data;
+    })
+    .then(data => {
+        document.getElementById("result").textContent = "Booking Successful ✅";
+        document.getElementById("tName").textContent = name;
+        document.getElementById("tPhone").textContent = phone;
+        document.getElementById("tRoute").textContent = route;
+        document.getElementById("tDate").textContent = date;
+        document.getElementById("tSeats").textContent = seats;
+        document.getElementById("tPrice").textContent = totalPrice;
+        document.getElementById("bookingId").textContent =
+            data && data.booking_id ? data.booking_id : Math.floor(Math.random()*90000+10000);
+
+        document.getElementById("ticketPopup").style.display = "flex";
+    })
+    .catch(error => {
+        console.error("Booking error:", error);
+        document.getElementById("result").textContent = "";
+        alert("Booking could not be completed. Please check that the Flask server is running and try again.");
+    });
+}
+
+// ================= Close Popup =================
+    
+    function closeTicket(){
+    
+    document.getElementById("ticketPopup").style.display="none";
+    
+    }
+    /* Dark / Light Mode */
+
+let dark = true;
+
+document.getElementById("themeBtn").onclick = function(){
+    dark = !dark;
+    document.body.classList.toggle("light-mode", !dark);
+
+    this.innerHTML = dark
+        ? '<i class="fa-solid fa-moon"></i>'
+        : '<i class="fa-solid fa-sun"></i>';
+}
+
+
+/* Route Search */
+
+document.getElementById("searchRoute")
+.addEventListener("input",function(){
+
+    const value = this.value.trim().toLowerCase();
+    const cards = document.querySelectorAll(".route-card");
+
+    cards.forEach(function(card){
+        const match = card.innerText.toLowerCase().includes(value);
+        card.style.display = match ? "" : "none";
+    });
+});
+    </script>
+</body>
